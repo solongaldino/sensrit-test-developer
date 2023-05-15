@@ -1,0 +1,27 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @db.Char(36)
+  name         String     @db.VarChar(100)
+  email        String     @unique(map: "email_UNIQUE") @db.VarChar(100)
+  login        String     @unique(map: "login_UNIQUE") @db.VarChar(50)
+  password     String     @db.VarChar(255)
+  status       UserStatus @default(active)
+  attemptLogin Int        @default(0) @db.TinyInt
+  createdAt    DateTime   @default(now()) @db.DateTime(0)
+  updatedAt    DateTime?  @db.DateTime(0)
+}
+
+enum UserStatus {
+  active
+  inactive
+  blockedAttemptLogin
+}

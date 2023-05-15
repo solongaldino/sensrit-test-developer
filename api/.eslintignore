@@ -1,0 +1,4 @@
+node_modules/
+build/
+volume/
+src/shared/repositories/prisma/schema/schema.prisma
