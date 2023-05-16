@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { AuthRoutes } from '@modules/auth';
 import { CustomersRoutes } from '@modules/customers';
+import { ProductsRoutes } from '@modules/products';
 import { UsersRoutes } from '@modules/users';
 import { PagesRoutes } from '@shared/infra/http/pages';
 import { EnvVariables, Logger } from '@shared/utils';
@@ -23,6 +24,9 @@ console.info('AuthRoutes');
 
 app.use('/', CustomersRoutes);
 console.info('CustomersRoutes');
+
+app.use('/', ProductsRoutes);
+console.info('ProductsRoutes');
 
 app.use('/', UsersRoutes);
 console.info('UsersRoutes');

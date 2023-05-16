@@ -3,5 +3,6 @@ import 'reflect-metadata';
 import '@shared/containers';
 import '@modules/auth/containers';
 import '@modules/customers/containers';
+import '@modules/products/containers';
 import '@modules/users/containers';
 console.info('\r\n[END] - Load container DI\r\n');
