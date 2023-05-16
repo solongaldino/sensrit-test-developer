@@ -1,0 +1,30 @@
+
+Cadastra usuário
+POST /users
+{
+    nome: string
+    email: string
+    password: string
+}
+
+Cadastra cliente
+POST /customers
+{
+    nome: string
+    email: string
+}
+
+Cadastra produto
+POST /products
+{
+    nome: string
+    value: number
+    description: string
+}
+
+Cadastra venda no db
+POST /sales
+[{productId: number}]
+
+Enviar venda para cliente por email
+POST /sales/send-to-customer/:clientId
