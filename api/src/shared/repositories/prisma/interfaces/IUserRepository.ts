@@ -22,8 +22,6 @@ interface IUserRepository
   findById(param: User['id'], conn?: Connection): Promise<User | null>;
 
   findByEmail(param: User['email'], conn?: Connection): Promise<User | null>;
-
-  findByLogin(param: User['login'], conn?: Connection): Promise<User | null>;
 }
 
 export default IUserRepository;

@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS `sensrit-api`.`Customer` (
   `email` VARCHAR(45) NOT NULL,
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -49,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `sensrit-api`.`User` (
   `password` VARCHAR(45) NOT NULL,
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

@@ -39,14 +39,6 @@ class UserRepository
       },
     });
   }
-
-  findByLogin(param: User['login'], conn = this.conn) {
-    return conn.user.findUnique({
-      where: {
-        login: param,
-      },
-    });
-  }
 }
 
 export default UserRepository;
