@@ -1,16 +1,16 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
 import { UserSchema } from '../schemes';
-import { RegisterController } from '../controllers';
+import { CreateUserController } from '../controllers';
 import { joiValidateSchema } from '@shared/infra/http/middlewares';
 
 const router = Router();
 
-const registerController = container.resolve(RegisterController);
+const createUserController = container.resolve(CreateUserController);
 router.post(
-  '/register',
+  '/',
   joiValidateSchema(UserSchema.register),
-  registerController.handle.bind(registerController),
+  createUserController.handle.bind(createUserController),
 );
 
 export { router as Routes };

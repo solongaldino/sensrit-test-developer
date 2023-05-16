@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError, AuthJwt, Logger } from '@shared/utils';
-import { JwtPayload } from '@shared/types';
+import { IJwtPayload } from '@shared/types';
 
 const authHandleMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.get('Authorization');
@@ -13,7 +13,7 @@ const authHandleMiddleware = async (req: Request, res: Response, next: NextFunct
     const token = authHeader.split(' ')[1];
     const jwtPayload = AuthJwt.isAuthenticated(token);
     ['iat', 'exp'].forEach((keyToRemove) => delete jwtPayload[keyToRemove]);
-    req.jwtPayload = jwtPayload as JwtPayload;
+    req.jwtPayload = jwtPayload as IJwtPayload;
     next();
   } catch (error) {
     Logger.error(error);

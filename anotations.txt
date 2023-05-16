@@ -7,6 +7,13 @@ POST /users
     password: string
 }
 
+Login usuário
+POST /auth/login
+{
+    email: string
+    password: string
+}
+
 Cadastra cliente
 POST /customers
 {
@@ -24,7 +31,17 @@ POST /products
 
 Cadastra venda no db
 POST /sales
-[{productId: number}]
+[{productId: number, amount: number}]
 
 Enviar venda para cliente por email
-POST /sales/send-to-customer/:clientId
+POST /sales/send-to-customers
+{
+	clientId: number,
+	sendType: "email"
+}
+
+
+Melhorias
+
+Cadastro de usuário:
+- Implantar validações nos padrões de senha, ex min 8 caracteres

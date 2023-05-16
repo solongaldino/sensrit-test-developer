@@ -12,7 +12,7 @@ model User {
   id        Int       @id @default(autoincrement()) @db.UnsignedInt
   name      String    @db.VarChar(45)
   email     String    @unique(map: "email_UNIQUE") @db.VarChar(45)
-  password  String    @db.VarChar(45)
+  password  String    @db.VarChar(255)
   createdAt DateTime  @db.DateTime(0)
   updatedAt DateTime? @db.DateTime(0)
   Sale      Sale[]
