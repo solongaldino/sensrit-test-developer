@@ -1,9 +1,9 @@
 export interface IJwtPayload {
-  id: string;
+  id: string | number;
 }
 
 export interface IClaims {
-  userId: string;
+  userId: string | number;
 }
 
 export interface IDefaultParamsConsole {
