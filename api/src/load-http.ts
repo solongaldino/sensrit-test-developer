@@ -2,6 +2,7 @@ console.info('[START] - Load modules HTTP\r\n');
 import express from 'express';
 import cors from 'cors';
 import { AuthRoutes } from '@modules/auth';
+import { CustomersRoutes } from '@modules/customers';
 import { UsersRoutes } from '@modules/users';
 import { PagesRoutes } from '@shared/infra/http/pages';
 import { EnvVariables, Logger } from '@shared/utils';
@@ -19,6 +20,9 @@ app.use(morganMiddleware);
 
 app.use('/', AuthRoutes);
 console.info('AuthRoutes');
+
+app.use('/', CustomersRoutes);
+console.info('CustomersRoutes');
 
 app.use('/', UsersRoutes);
 console.info('UsersRoutes');
