@@ -1,6 +1,7 @@
 console.info('[START] - Load modules HTTP\r\n');
 import express from 'express';
 import cors from 'cors';
+import { AuthRoutes } from '@modules/auth';
 import { UsersRoutes } from '@modules/users';
 import { PagesRoutes } from '@shared/infra/http/pages';
 import { EnvVariables, Logger } from '@shared/utils';
@@ -16,8 +17,14 @@ app.use(cors());
 
 app.use(morganMiddleware);
 
+app.use('/', AuthRoutes);
+console.info('AuthRoutes');
+
 app.use('/', UsersRoutes);
+console.info('UsersRoutes');
+
 app.use('/', PagesRoutes);
+console.info('PagesRoutes');
 
 app.use(errorHandlerMiddleware);
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export interface AuthJwtPayload {
-  id: string;
+  id: string | number;
   userType?: AuthJwtUserType.USER;
 }
 
