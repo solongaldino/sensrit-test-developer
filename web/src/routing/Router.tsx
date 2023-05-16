@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Taxes, Products, ProductsType, Sales } from "../pages/backoffice";
-import { UrlNotFound } from "../pages/external";
+import { Taxes, Products, Sales } from "../pages/backoffice";
+import { Register, UrlNotFound } from "../pages/external";
 import { BackofficeTemplate, ExternalTemplate } from "../shared/layout";
 
 export default function Router() {
@@ -8,10 +8,10 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="*"
+          path="/register"
           element={
             <ExternalTemplate>
-              <UrlNotFound url={window.location.pathname} />
+              <Register />
             </ExternalTemplate>
           }
         />
@@ -40,19 +40,19 @@ export default function Router() {
           }
         />
         <Route
-          path="/products-type"
-          element={
-            <BackofficeTemplate isFirstActivation={false}>
-              <ProductsType />
-            </BackofficeTemplate>
-          }
-        />
-        <Route
           path="/sales"
           element={
             <BackofficeTemplate isFirstActivation={false}>
               <Sales />
             </BackofficeTemplate>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <ExternalTemplate>
+              <UrlNotFound url={window.location.pathname} />
+            </ExternalTemplate>
           }
         />
       </Routes>

@@ -47,7 +47,12 @@ export default function InputCheckBox({
               onChange={onChange}
               checked={checked}
             />
-            <label className="custom-control-label">{label}</label>
+            <label
+              style={{ marginLeft: "5px" }}
+              className="custom-control-label"
+            >
+              {label}
+            </label>
             {error?.message && <MessageErrorInput message={error?.message} />}
           </div>
         </div>
