@@ -53,6 +53,7 @@ export default function RegisterForm(): JSX.Element {
     handleSubmit,
     control: rawControl,
     setValue,
+    reset,
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -64,10 +65,10 @@ export default function RegisterForm(): JSX.Element {
     onSuccess: () => {
       hideLoader();
       showSuccessDialog({
-        title: "Verification Link Send!",
-        description:
-          "We have sended a verification token to your e-mail, please check your inbox and span.",
+        title: "Cadastro realizado com sucesso!",
+        description: "E uma satisfação telo em nosso sistema",
       });
+      reset();
     },
   });
 
