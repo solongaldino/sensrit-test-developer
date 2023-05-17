@@ -24,7 +24,6 @@ export default function useCreateCustomer({
   const { showLoader, hideLoader } = useLoader();
 
   const { user } = useAuth();
-  console.log({ user });
   return useMutation(
     (body) => APIPost<Response, Body>(`/customers`, body, user?.accessToken),
     {

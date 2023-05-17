@@ -20,6 +20,12 @@ const links = [
     icon: <BsCart4 className="m-1" />,
     isHideFirstActivation: false,
   },
+  {
+    label: "Sair",
+    url: "/logout",
+    icon: <BsCart4 className="m-1" />,
+    isHideFirstActivation: false,
+  },
 ];
 
 export default links;

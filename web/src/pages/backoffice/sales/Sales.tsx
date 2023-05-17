@@ -14,7 +14,7 @@ import CreateSaleForm from "./CreateSaleForm";
 import { useCreateSale } from "../../../hooks/http/api/mutations";
 import { ProductInterface } from "../../../types";
 import { useAlertDialogs } from "../../../hooks";
-import { APIGet } from "../../../utils";
+import { useListAllCustomers } from "../../../hooks/http/api/queries";
 
 interface SaleItemInterface {
   id: number;
@@ -22,21 +22,26 @@ interface SaleItemInterface {
   amount: number;
   unitaryValue: number;
   subTotalValue: number;
-  subTotalTaxe: number;
 }
 
 interface CreateSaleInterface {
   items: SaleItemInterface[];
   amountValue: number;
-  amountTaxe: number;
 }
 
 export default function Sales() {
   const [modal, setModal] = useState(false);
+  const [customerId, setCustomerId] = useState(0);
+
+  const {
+    data: customers,
+    isError,
+    isSuccess,
+    isLoading,
+  } = useListAllCustomers();
 
   const [sale, setSale] = useState<CreateSaleInterface>({
     items: [],
-    amountTaxe: 0,
     amountValue: 0,
   });
 
@@ -55,28 +60,16 @@ export default function Sales() {
   const toggle = () => setModal(!modal);
 
   async function addProduct(product: ProductInterface, amount: number) {
-    const fullProduct = await APIGet<ProductInterface>(
-      `/products?id=${product.id}`
-    );
-
     const newSaleItem: SaleItemInterface = {
-      id: fullProduct.id,
-      name: fullProduct.name,
+      id: product.id,
+      name: product.name,
       amount,
-      unitaryValue: fullProduct.value,
-      subTotalValue: fullProduct.value * amount,
-      subTotalTaxe: (function () {
-        let value = 0;
-        fullProduct.taxes?.forEach((item) => {
-          value += (item.percentage * amount * fullProduct.value) / 100;
-        });
-        return value;
-      })(),
+      unitaryValue: product.value,
+      subTotalValue: product.value * amount,
     };
 
     const newSaleData: CreateSaleInterface = {
       items: [...sale.items, newSaleItem],
-      amountTaxe: sale.amountTaxe + newSaleItem.subTotalTaxe,
       amountValue: sale.amountValue + newSaleItem.subTotalValue,
     };
 
@@ -96,7 +89,6 @@ export default function Sales() {
 
     const newSaleData: CreateSaleInterface = {
       items: newItems,
-      amountTaxe: sale.amountTaxe - oldItems[0].subTotalTaxe,
       amountValue: sale.amountValue - oldItems[0].subTotalValue,
     };
 
@@ -118,7 +110,13 @@ export default function Sales() {
           };
         }),
       };
-      mutate(list);
+      if (customerId === 0) {
+        showErrorDialog({
+          title: "Error ao tentar salvar venda",
+          description: "Selecione o cliente!",
+        });
+      }
+      mutate({ list: list.list, customerId });
     } else {
       showErrorDialog({
         title: "Error ao tentar salvar venda",
@@ -144,6 +142,25 @@ export default function Sales() {
         <Button color="primary" onClick={toggle}>
           Adicionar um Produto
         </Button>
+        {customers && (
+          <>
+            <br />
+            <select
+              onChange={(e) => {
+                setCustomerId(Number(e.target.value));
+              }}
+              style={{ maxWidth: "420px" }}
+              className="bg-white text-muted w-100 p-2 rounded border mt-5"
+            >
+              <option className="" value="none">
+                Selecione Cliente
+              </option>
+              {customers.map((item) => (
+                <option value={item.id}>{item.name}</option>
+              ))}
+            </select>
+          </>
+        )}
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Adicionar produto</ModalHeader>
           <ModalBody>
@@ -170,7 +187,6 @@ export default function Sales() {
               <th>Nome do Produto</th>
               <th>Quantidade</th>
               <th>Valor Unitário</th>
-              <th>Total Impostos</th>
               <th>Sub. Total</th>
               <th>Remover Produto</th>
             </tr>
@@ -182,7 +198,6 @@ export default function Sales() {
                 <td>{item.name}</td>
                 <td>{item.amount}</td>
                 <td>{item.unitaryValue}</td>
-                <td>{item.subTotalTaxe}</td>
                 <td>{item.subTotalValue}</td>
                 <td className="text-center">
                   <Button onClick={() => removeProduct(item.id)} color="danger">
@@ -198,7 +213,6 @@ export default function Sales() {
         <Card color="light app-backoffice-card mt-3 p-1">
           <CardBody>
             <CardText>Total: R${sale.amountValue}</CardText>
-            <CardText>Impostos: R${sale.amountTaxe}</CardText>
           </CardBody>
         </Card>
       </div>
