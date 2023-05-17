@@ -33,9 +33,7 @@ export default function LoginForm(): JSX.Element {
 
   async function onSubmit({ email, password }: IFormInputs) {
     try {
-      console.log("Antes do login context");
-      const test = await login(email, password);
-      console.log(test);
+      await login(email, password);
     } catch (error) {
       const throwStandardError = (message: string) =>
         showErrorDialog({

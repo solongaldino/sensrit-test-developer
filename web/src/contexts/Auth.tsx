@@ -31,7 +31,6 @@ interface IRefreshResponseAPI {
   name: string;
   email: string;
   accessToken: string;
-  refreshToken: string;
 }
 
 //TODO implantar serviço de variavel de ambiente
@@ -39,15 +38,12 @@ const authTokenKeyLocalStorage = process.env
   .REACT_APP_TOKEN_KEY_LOCAL_STORAGE as string;
 
 const endpoint = process.env.REACT_APP_API_URL;
-console.log(authTokenKeyLocalStorage);
-console.log(endpoint);
+
 const useService = () => {
   const [user, setUser] = useState<ILoggedUser | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log("Antes do login");
+
   async function login(email: string, password: string): Promise<void> {
-    console.log("Dentro do login");
-    console.log(email);
     const response: AxiosResponse<ILoginResponseAPI> = await axios.post(
       `${endpoint}/auth/login`,
       {

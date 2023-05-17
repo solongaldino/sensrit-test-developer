@@ -7,4 +7,10 @@ export const login = Joi.object({
   }),
 }).unknown(true);
 
+export const refreshToken = Joi.object({
+  body: Joi.object({
+    refreshToken: Joi.string().required(),
+  }),
+}).unknown(true);
+
 export * as AuthSchema from '.';
