@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Taxes, Products, Sales } from "../pages/backoffice";
+import { Customers, Products, Sales } from "../pages/backoffice";
 import { Login, Logout, Register, UrlNotFound } from "../pages/external";
 import { ExternalTemplate } from "../shared/layout";
 import PrivateRoute from "./PrivateRoute";
@@ -42,8 +42,8 @@ export default function Router() {
           element={<PrivateRoute element={<Sales />} />}
         />
         <Route
-          path="/backoffice/taxes"
-          element={<PrivateRoute element={<Taxes />} />}
+          path="/backoffice/customers"
+          element={<PrivateRoute element={<Customers />} />}
         />
         <Route
           path="/backoffice/products"

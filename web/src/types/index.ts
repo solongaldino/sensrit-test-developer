@@ -1,14 +1,7 @@
-export interface TaxeInterface {
+export interface CustomerInterface {
   id: number;
   name: string;
-  percentage: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface ProductTypeInterface {
-  id: number;
-  name: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,8 +13,6 @@ export interface ProductInterface {
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  productType?: Partial<ProductTypeInterface>;
-  taxes?: TaxeInterface[];
 }
 
 export interface SaleInterface {

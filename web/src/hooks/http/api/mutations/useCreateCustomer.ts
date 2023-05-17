@@ -1,14 +1,14 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { useAlertDialogs } from "../../..";
-import { ProductTypeInterface } from "../../../../types";
+import { useAlertDialogs, useAuth } from "../../..";
+import { CustomerInterface } from "../../../../types";
 import { APIPost } from "../../../../utils";
 import useLoader from "../../../useLoader";
 
-type Response = ProductTypeInterface;
+type Response = CustomerInterface;
 
 interface Body {
   name: string;
-  taxeId: number;
+  email: string;
 }
 
 interface Args {
@@ -16,15 +16,17 @@ interface Args {
   onError?: () => void;
 }
 
-export default function useCreateProductType({
+export default function useCreateCustomer({
   onSuccess,
   onError,
 }: Args): UseMutationResult<Response, unknown, Body> {
   const { showErrorDialog } = useAlertDialogs();
   const { showLoader, hideLoader } = useLoader();
 
+  const { user } = useAuth();
+  console.log({ user });
   return useMutation(
-    (body) => APIPost<Response, Body>(`/products-type`, body),
+    (body) => APIPost<Response, Body>(`/customers`, body, user?.accessToken),
     {
       onMutate: () => {
         showLoader();
@@ -32,7 +34,7 @@ export default function useCreateProductType({
       onError: (error: Error) => {
         hideLoader();
         showErrorDialog({
-          title: "Error ao criar tipo de produto",
+          title: "Error ao criar cliente",
           description: error.message,
         });
         onError?.();

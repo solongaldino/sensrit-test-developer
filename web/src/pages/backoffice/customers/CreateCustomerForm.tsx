@@ -1,71 +1,69 @@
 import { Button, Form, FormGroup } from "reactstrap";
 import { useAlertDialogs } from "../../../hooks";
-import { InputNumber, InputText } from "../../../shared/forms/inputs";
+import { InputText } from "../../../shared/forms/inputs";
 import { Control, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useCreateTaxe } from "../../../hooks/http/api/mutations";
+import { useCreateCustomer } from "../../../hooks/http/api/mutations";
 
 interface IFormInputs {
   name: string;
-  percentage: number;
+  email: string;
 }
 
 const schema = yup
   .object({
     name: yup.string().required("Nome e obrigatorio"),
-    percentage: yup.number().required("Porcentagem e obrigatorio"),
+    email: yup.string().email().required("Email e obrigatorio"),
   })
   .required();
 
-export default function CreateTaxeForm() {
+export default function CreateCustomerForm() {
   const { showSuccessDialog } = useAlertDialogs();
 
   const defaultValues: IFormInputs = {
     name: "",
-    percentage: 0,
+    email: "",
   };
 
-  const { handleSubmit, control: rawControl } = useForm<IFormInputs>({
+  const {
+    handleSubmit,
+    control: rawControl,
+    reset,
+  } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: defaultValues,
   });
+
   const control = rawControl as unknown as Control;
 
-  const { mutate } = useCreateTaxe({
-    onSuccess: () =>
+  const { mutate } = useCreateCustomer({
+    onSuccess: () => {
       showSuccessDialog({
-        title: "Imposto criado com sucesso!",
+        title: "Cliente criado com sucesso!",
         description: "",
-      }),
+      });
+      reset();
+    },
   });
 
-  function onSubmit({ name, percentage }: IFormInputs) {
+  function onSubmit({ name, email }: IFormInputs) {
     mutate({
       name,
-      percentage,
+      email,
     });
   }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        <InputText
-          id="name"
-          control={control}
-          label="Nome do Imposto"
-          placeholder="Nome do Imposto"
-        />
-        <InputNumber
-          id="percentage"
-          control={control}
-          label="Porcentagem do imposto"
-          placeholder="Porcentagem do Imposto"
-        />
+        <InputText id="name" control={control} label="Nome" />
+        <InputText id="email" control={control} label="Email" />
       </FormGroup>
       <div className="form-group text-center">
         <Button className="w-100" color="primary" type="submit">
-          Send
+          Enviar
         </Button>
       </div>
     </Form>

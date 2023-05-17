@@ -1,5 +1,4 @@
 export { default as useCreateProduct } from "./useCreateProduct";
-export { default as useCreateProductType } from "./useCreateProductType";
 export { default as useCreateSale } from "./useCreateSale";
-export { default as useCreateTaxe } from "./useCreateTaxe";
+export { default as useCreateCustomer } from "./useCreateCustomer";
 export { default as useRegisterUser } from "./useRegisterUser";
