@@ -1,12 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Taxes, Products, Sales } from "../pages/backoffice";
-import { Register, UrlNotFound } from "../pages/external";
-import { BackofficeTemplate, ExternalTemplate } from "../shared/layout";
+import { Login, Logout, Register, UrlNotFound } from "../pages/external";
+import { ExternalTemplate } from "../shared/layout";
+import PrivateRoute from "./PrivateRoute";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<PrivateRoute element={<Sales />} />} />
+        <Route
+          path="/login"
+          element={
+            <ExternalTemplate>
+              <Login />
+            </ExternalTemplate>
+          }
+        />
+        <Route
+          path="/logout"
+          element={
+            <ExternalTemplate>
+              <Logout />
+            </ExternalTemplate>
+          }
+        />
         <Route
           path="/register"
           element={
@@ -16,36 +34,20 @@ export default function Router() {
           }
         />
         <Route
-          path="/"
-          element={
-            <BackofficeTemplate isFirstActivation={false}>
-              <Sales />
-            </BackofficeTemplate>
-          }
+          path="/backoffice"
+          element={<PrivateRoute element={<Sales />} />}
         />
         <Route
-          path="/taxes"
-          element={
-            <BackofficeTemplate isFirstActivation={false}>
-              <Taxes />
-            </BackofficeTemplate>
-          }
+          path="/backoffice/sales"
+          element={<PrivateRoute element={<Sales />} />}
         />
         <Route
-          path="/products"
-          element={
-            <BackofficeTemplate isFirstActivation={false}>
-              <Products />
-            </BackofficeTemplate>
-          }
+          path="/backoffice/taxes"
+          element={<PrivateRoute element={<Taxes />} />}
         />
         <Route
-          path="/sales"
-          element={
-            <BackofficeTemplate isFirstActivation={false}>
-              <Sales />
-            </BackofficeTemplate>
-          }
+          path="/backoffice/products"
+          element={<PrivateRoute element={<Products />} />}
         />
         <Route
           path="*"

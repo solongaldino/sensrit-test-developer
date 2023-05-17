@@ -63,24 +63,30 @@ export default class CreateSaleUseCase implements ICreateSaleUseCase {
 
         amountSale += Number(product.value) * item.amount;
 
-        await this.itemRepository.create({
-          data: {
-            amount: item.amount,
-            value: product.value,
-            saleId: sale.id,
-            productId: product.id,
+        await this.itemRepository.create(
+          {
+            data: {
+              amount: item.amount,
+              value: product.value,
+              saleId: sale.id,
+              productId: product.id,
+            },
           },
-        });
+          conn,
+        );
       }
 
-      await this.saleRepository.update({
-        where: {
-          id: sale.id,
+      await this.saleRepository.update(
+        {
+          where: {
+            id: sale.id,
+          },
+          data: {
+            amount: amountSale,
+          },
         },
-        data: {
-          amount: amountSale,
-        },
-      });
+        conn,
+      );
     });
   }
 }

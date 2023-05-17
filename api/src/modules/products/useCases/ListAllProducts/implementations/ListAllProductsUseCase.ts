@@ -18,7 +18,7 @@ export default class ListAllProductsUseCase implements IListAllProductsUseCase {
     return list.map((item) => ({
       id: item.id,
       name: item.name,
-      value: item.value,
+      value: Number(item.value),
       description: item.description,
       createdAt: item.createdAt,
     }));

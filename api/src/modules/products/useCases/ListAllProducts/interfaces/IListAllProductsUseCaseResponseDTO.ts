@@ -1,11 +1,11 @@
 import { Product } from '@shared/repositories/prisma';
 
 type IListAllProductsUseCaseResponseDTO = {
-  id: Product['id'];
-  name: Product['name'];
-  value: Product['value'];
-  description: Product['description'];
-  createdAt: Product['createdAt'];
+  id: number;
+  name: string;
+  value: number;
+  description: string;
+  createdAt: Date;
 }[];
 
 export default IListAllProductsUseCaseResponseDTO;

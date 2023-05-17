@@ -26,7 +26,7 @@ POST /products
 {
     nome: string
     value: number
-    description: string
+    description?: string
 }
 
 Cadastra venda no db

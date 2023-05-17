@@ -11,9 +11,10 @@ const authHandleMiddleware = async (req: Request, res: Response, next: NextFunct
 
   try {
     const token = authHeader.split(' ')[1];
-    const jwtPayload = AuthJwt.isAuthenticated(token);
+    const jwtPayload = AuthJwt.isAuthenticated(token) as IJwtPayload;
     ['iat', 'exp'].forEach((keyToRemove) => delete jwtPayload[keyToRemove]);
-    req.jwtPayload = jwtPayload as IJwtPayload;
+    req.jwtPayload = jwtPayload;
+    req.claims = { userId: jwtPayload.id };
     next();
   } catch (error) {
     Logger.error(error);
